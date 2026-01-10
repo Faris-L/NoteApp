@@ -10,7 +10,8 @@ type NotesUIContextValue = {
 
   isNoteCard: boolean;
   toggleNoteCard: () => void;
-
+  openNoteCard: () => void;
+  closeNoteCard: () => void;
   chosenFilter: NotesFilter;
   setChosenFilter: (filter: NotesFilter) => void;
 
@@ -51,7 +52,8 @@ export const NotesUIProvider = ({ children }: ProviderProps) => {
         isSettings,
         isNoteCard,
         chosenFilter,
-
+        openNoteCard: () => setIsNoteCard(true),
+        closeNoteCard: () => setIsNoteCard(false),
         setChosenFilter: (f) => setChosenFilter(f),
         toggleNoteCard:()=>setIsNoteCard((p)=>!p),
         toggleSideBar: () => setSideBarOpen((p) => !p),
