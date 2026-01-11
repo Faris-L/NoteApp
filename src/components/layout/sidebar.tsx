@@ -1,41 +1,20 @@
-import { useEffect, useRef, useState } from "react";
 import { useNotesUI } from "../../context/UIcontext";
-import type { NotesFilter } from "../../type";
-
+import { useNotesData } from "../../context/Datacontext";
 import {
   Aside,
   NewNoteBtn,
-  Section,
-  FilterButton,
-  Dropdown,
-  DropItem,
+  QuickFilters,
+  QuickItem,
+  QuickTitle,
 } from "./sidebar.styled";
 
-const FILTERS: { key: NotesFilter; label: string; icon: string }[] = [
-  { key: "all", label: "All", icon: "bx bx-note" },
-  { key: "pinned", label: "Pinned", icon: "bx bx-pin" },
-  { key: "archived", label: "Archived", icon: "bx bx-archive" },
-  { key: "trash", label: "Trash", icon: "bx bx-trash" },
-  { key: "untagged", label: "Untagged", icon: "bx bx-tag-alt" },
-];
-
 const SideBar = () => {
-  const { sideBarOpen, chosenFilter, setChosenFilter, openNoteCard } = useNotesUI();
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const { sideBarOpen, chosenFilter, setChosenFilter, openNoteCard,setActiveTag } =
+    useNotesUI();
+    const { tags } = useNotesData();
 
-  useEffect(() => {
-    const onDown = (e: MouseEvent) => {
-      if (!wrapRef.current) return;
-      if (!wrapRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, []);
 
   if (!sideBarOpen) return null;
-
-  const selected = FILTERS.find((f) => f.key === chosenFilter) ?? FILTERS[0];
 
   return (
     <Aside>
@@ -44,33 +23,60 @@ const SideBar = () => {
         New note
       </NewNoteBtn>
 
-      <Section ref={wrapRef}>
-        <FilterButton type="button" onClick={() => setOpen((p) => !p)}>
-          <span className="left">
-            <i className="bx bx-filter" />
-            <b>{selected.label}</b>
-          </span>
-          <i className={open ? "bx bx-chevron-up" : "bx bx-chevron-down"} />
-        </FilterButton>
+      <QuickTitle>Quick filters</QuickTitle>
 
-        {open && (
-          <Dropdown>
-            {FILTERS.map((f) => (
-              <DropItem
-                key={f.key}
-                data-active={f.key === chosenFilter}
-                onClick={() => {
-                  setChosenFilter(f.key);
-                  setOpen(false);
-                }}
-              >
-                <i className={f.icon} />
-                {f.label}
-              </DropItem>
-            ))}
-          </Dropdown>
-        )}
-      </Section>
+      <QuickFilters>
+        <QuickItem
+          type="button"
+          data-active={chosenFilter === "all"}
+          onClick={() => setChosenFilter("all")}
+        >
+          <i className="bx bx-note" />
+          All
+        </QuickItem>
+
+        <QuickItem
+          type="button"
+          data-active={chosenFilter === "pinned"}
+          onClick={() => setChosenFilter("pinned")}
+        >
+          <i className="bx bx-pin" />
+          Pinned
+        </QuickItem>
+
+        <QuickItem
+          type="button"
+          data-active={chosenFilter === "archived"}
+          onClick={() => setChosenFilter("archived")}
+        >
+          <i className="bx bx-archive" />
+          Archived
+        </QuickItem>
+
+        <QuickItem
+          type="button"
+          data-active={chosenFilter === "trash"}
+          onClick={() => setChosenFilter("trash")}
+        >
+          <i className="bx bx-trash" />
+          Trash
+        </QuickItem>
+      </QuickFilters>
+      <QuickTitle>Tags</QuickTitle>
+
+      <QuickFilters>
+        {tags.slice(0, 8).map((t) => (
+          <QuickItem
+            key={t.name}
+            type="button"
+            onClick={() => setActiveTag(t.name)} 
+          >
+            <i className="bx bx-purchase-tag" />
+            {t.name}
+            <span style={{ marginLeft: "auto", opacity: 0.8 }}>{t.count}</span>
+          </QuickItem>
+        ))}
+      </QuickFilters>
     </Aside>
   );
 };

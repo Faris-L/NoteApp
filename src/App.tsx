@@ -1,13 +1,7 @@
-import Header from "./components/layout/header";
-import SideBar from "./components/layout/sidebar";
+import NotesLayout from "../../notes-pro/src/components/layout/layout";
 
-const App = () =>{
-  return(
-    <div>
-      <Header/>
-      <SideBar/>
-    </div>
+const App = () => {
+  return <NotesLayout />;
+};
 
-  )
-}
 export default App;

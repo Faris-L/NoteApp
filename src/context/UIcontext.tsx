@@ -1,20 +1,21 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { NotesFilter } from "../type";
+import type { TagFilter } from "../type";
 
 type NotesUIContextValue = {
    searchValue: string;
   sideBarOpen: boolean;
   isGrid: boolean;
   isSettings: boolean;
-
+  chosenFilter: NotesFilter;
   isNoteCard: boolean;
+  activeTag: TagFilter;
+  setActiveTag: (tag: TagFilter) => void;
   toggleNoteCard: () => void;
   openNoteCard: () => void;
   closeNoteCard: () => void;
-  chosenFilter: NotesFilter;
   setChosenFilter: (filter: NotesFilter) => void;
-
   toggleSideBar: () => void;
   toggleGrid: () => void;
   toggleSettings: () => void;
@@ -42,6 +43,7 @@ export const NotesUIProvider = ({ children }: ProviderProps) => {
   const [isSettings, setIsSettings] = useState(false);
   const [isNoteCard,setIsNoteCard] =  useState(false);
   const [chosenFilter, setChosenFilter] = useState<NotesFilter>("all");
+  const [activeTag, setActiveTag] = useState<TagFilter>(null);
 
   return (
     <NotesUIContext.Provider
@@ -52,6 +54,8 @@ export const NotesUIProvider = ({ children }: ProviderProps) => {
         isSettings,
         isNoteCard,
         chosenFilter,
+        activeTag,
+        setActiveTag: (tag: TagFilter) => setActiveTag(tag),
         openNoteCard: () => setIsNoteCard(true),
         closeNoteCard: () => setIsNoteCard(false),
         setChosenFilter: (f) => setChosenFilter(f),

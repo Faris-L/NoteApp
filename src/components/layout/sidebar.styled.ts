@@ -7,6 +7,7 @@ export const Aside = styled.aside`
 
   background: #6f6f6f;
   color: #fff;
+
   border-right: 1px solid rgba(255, 255, 255, 0.15);
 
   display: flex;
@@ -32,6 +33,7 @@ export const NewNoteBtn = styled.button`
   font-weight: 600;
 
   cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
 
   i {
     font-size: 18px;
@@ -46,80 +48,54 @@ export const NewNoteBtn = styled.button`
   }
 `;
 
-export const Section = styled.div`
-  position: relative;
+export const QuickTitle = styled.p`
+  margin: 6px 0 0;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.85);
 `;
 
-export const FilterButton = styled.button`
-  height: 42px;
-  width: 100%;
-  padding: 0 14px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 999px;
-
-  color: #fff;
-  cursor: pointer;
-
-  .left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  i {
-    font-size: 18px;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-  }
-`;
-
-export const Dropdown = styled.div`
-  margin-top: 8px;
-
+export const QuickFilters = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
-
-  padding: 8px;
-  border-radius: 12px;
-
-  background: #7a7a7a;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  gap: 8px;
 `;
 
-export const DropItem = styled.button`
-  height: 38px;
+export const QuickItem = styled.button`
+  height: 40px;
+  width: 100%;
   padding: 0 12px;
 
   display: flex;
   align-items: center;
   gap: 10px;
 
-  background: transparent;
-  border: none;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
 
   color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+
   cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
 
   i {
     font-size: 18px;
+    opacity: 0.9;
   }
 
   &:hover {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.28);
   }
 
   &[data-active="true"] {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.38);
+    border-color: rgba(255, 255, 255, 0.35);
   }
 `;

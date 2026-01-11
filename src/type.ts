@@ -34,3 +34,5 @@ export type NotesFilter =
   | "archived"
   | "trash"
   | "untagged";
+
+export type TagFilter = string | null;
