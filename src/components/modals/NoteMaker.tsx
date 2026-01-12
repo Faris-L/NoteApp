@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNotesData } from "../../context/Datacontext"; 
+import { useNotesUI } from "../../context/UIcontext"; 
 import {
   Wrapper,
   Field,
@@ -15,6 +17,9 @@ import {
 } from "./noteMaker.styled";
 
 const NoteMaker = () => {
+  const { createNote } = useNotesData();
+  const { closeModal } = useNotesUI();   
+
   const [noteTitle, setNoteTitle] = useState("");
   const [noteText, setNoteText] = useState("");
 
@@ -43,18 +48,25 @@ const NoteMaker = () => {
   };
 
   const handleSave = () => {
-    console.log({
-      title: noteTitle,
-      text: noteText,
+    const title = noteTitle.trim();
+    const content = noteText.trim();
+
+    
+    if (!title && !content) return;
+
+    createNote({
+      title,
+      content,
       tags,
-      isPinned,
     });
 
     resetForm();
+    closeModal(); 
   };
 
   const handleCancel = () => {
     resetForm();
+    closeModal(); 
   };
 
   return (

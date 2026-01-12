@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useMemo } from "react";
 import type { ReactNode } from "react";
-import type { Note } from "../type";
+import type { Note, CreateNotePayload } from "../type"; 
 
 type NotesDataContextValue = {
   notes: Note[];
   tags: { name: string; count: number }[];
   getNotesByTag: (tag: string | null) => Note[];
+  createNote: (payload: CreateNotePayload) => void; 
 };
 
 const NotesDataContext = createContext<NotesDataContextValue | null>(null);
@@ -24,6 +25,25 @@ type ProviderProps = {
 
 export const NotesDataProvider = ({ children }: ProviderProps) => {
   const [notes, setNotes] = useState<Note[]>([]);
+
+  
+  const createNote = (payload: CreateNotePayload) => {
+    const now = Date.now();
+
+    const newNote: Note = {
+      id: crypto.randomUUID(),
+      title: payload.title,
+      content: payload.content,
+      tags: payload.tags ?? [],
+      createdAt: now,
+      updatedAt: now,
+      isPinned: false,
+      isArchived: false,
+      isDeleted: false,
+    };
+
+    setNotes((prev) => [newNote, ...prev]);
+  };
 
   const tags = useMemo(() => {
     const map = new Map<string, number>();
@@ -50,6 +70,7 @@ export const NotesDataProvider = ({ children }: ProviderProps) => {
         notes,
         tags,
         getNotesByTag,
+        createNote, 
       }}
     >
       {children}

@@ -26,9 +26,9 @@ const SideBar = () => {
       <NewNoteBtn
         type="button"
         onClick={() => {
-          setActiveTag(null);      // opcionalno
-          setChosenFilter("all");  // opcionalno
-          openModal("create");     // ✅
+          setActiveTag(null);      
+          setChosenFilter("all");  
+          openModal("create");     
         }}
       >
         <i className="bx bx-plus" />
