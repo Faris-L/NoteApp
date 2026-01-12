@@ -36,3 +36,5 @@ export type NotesFilter =
   | "untagged";
 
 export type TagFilter = string | null;
+
+export type ActiveModal = "create" | "edit" | "settings" | "deleteConfirm" | null;

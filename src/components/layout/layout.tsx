@@ -1,6 +1,8 @@
 import Header from "./header";
 import SideBar from "./sidebar";
+import NoteMaker from "../modals/NoteMaker";
 import { useNotesUI } from "../../context/UIcontext";
+
 import {
   Page,
   Content,
@@ -14,7 +16,7 @@ import {
 } from "../layout/notesLayout.styled";
 
 const NotesLayout = () => {
-  const { isNoteCard, closeNoteCard } = useNotesUI();
+  const { activeModal, closeModal } = useNotesUI();
 
   return (
     <Page>
@@ -29,23 +31,23 @@ const NotesLayout = () => {
         </Main>
       </Content>
 
-     
-      {isNoteCard ? (
-        <ModalOverlay onClick={closeNoteCard}>
+      {activeModal === "create" && (
+        <ModalOverlay onClick={closeModal}>
           <ModalBox onClick={(e) => e.stopPropagation()}>
             <ModalHeader>
               <ModalTitle>Create note</ModalTitle>
-              <CloseBtn type="button" onClick={closeNoteCard}>
+
+              <CloseBtn type="button" onClick={closeModal}>
                 <i className="bx bx-x" />
               </CloseBtn>
             </ModalHeader>
 
             <ModalBody>
-              <p>Ovde ide tvoj Create Note UI.</p>
+              <NoteMaker />
             </ModalBody>
           </ModalBox>
         </ModalOverlay>
-      ) : null}
+      )}
     </Page>
   );
 };

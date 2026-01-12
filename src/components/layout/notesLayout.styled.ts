@@ -2,22 +2,22 @@ import styled from "styled-components";
 
 export const Page = styled.div`
   min-height: 100vh;
-  background: #5f5f5f; /* po želji */
+  background: #5f5f5f; 
 `;
 
 export const Content = styled.div`
   display: flex;
-  min-height: calc(100vh - 68px); /* isto koliko ti je header visok */
+  min-height: calc(100vh - 68px); 
 `;
 
 export const Main = styled.main`
   flex: 1;
   padding: 20px;
-  background: #7a7a7a; /* da bude u fazonu */
+  background: #7a7a7a; 
   color: #fff;
 `;
 
-/* ===== MODAL ===== */
+
 export const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;

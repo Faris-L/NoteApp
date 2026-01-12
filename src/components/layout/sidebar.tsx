@@ -9,16 +9,28 @@ import {
 } from "./sidebar.styled";
 
 const SideBar = () => {
-  const { sideBarOpen, chosenFilter, setChosenFilter, openNoteCard,setActiveTag } =
-    useNotesUI();
-    const { tags } = useNotesData();
+  const {
+    sideBarOpen,
+    chosenFilter,
+    setChosenFilter,
+    openModal,
+    setActiveTag,
+  } = useNotesUI();
 
+  const { tags } = useNotesData();
 
   if (!sideBarOpen) return null;
 
   return (
     <Aside>
-      <NewNoteBtn type="button" onClick={openNoteCard}>
+      <NewNoteBtn
+        type="button"
+        onClick={() => {
+          setActiveTag(null);      // opcionalno
+          setChosenFilter("all");  // opcionalno
+          openModal("create");     // ✅
+        }}
+      >
         <i className="bx bx-plus" />
         New note
       </NewNoteBtn>
@@ -62,6 +74,7 @@ const SideBar = () => {
           Trash
         </QuickItem>
       </QuickFilters>
+
       <QuickTitle>Tags</QuickTitle>
 
       <QuickFilters>
@@ -69,7 +82,10 @@ const SideBar = () => {
           <QuickItem
             key={t.name}
             type="button"
-            onClick={() => setActiveTag(t.name)} 
+            onClick={() => {
+              setChosenFilter("all");
+              setActiveTag(t.name);
+            }}
           >
             <i className="bx bx-purchase-tag" />
             {t.name}

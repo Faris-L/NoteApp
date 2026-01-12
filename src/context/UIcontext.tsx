@@ -1,21 +1,23 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-import type { NotesFilter } from "../type";
-import type { TagFilter } from "../type";
+import type { NotesFilter, TagFilter, ActiveModal } from "../type";
 
 type NotesUIContextValue = {
-   searchValue: string;
+  searchValue: string;
   sideBarOpen: boolean;
   isGrid: boolean;
   isSettings: boolean;
+
   chosenFilter: NotesFilter;
-  isNoteCard: boolean;
+  setChosenFilter: (filter: NotesFilter) => void;
+
   activeTag: TagFilter;
   setActiveTag: (tag: TagFilter) => void;
-  toggleNoteCard: () => void;
-  openNoteCard: () => void;
-  closeNoteCard: () => void;
-  setChosenFilter: (filter: NotesFilter) => void;
+
+  activeModal: ActiveModal;
+  openModal: (m: Exclude<ActiveModal, null>) => void;
+  closeModal: () => void;
+
   toggleSideBar: () => void;
   toggleGrid: () => void;
   toggleSettings: () => void;
@@ -41,9 +43,14 @@ export const NotesUIProvider = ({ children }: ProviderProps) => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [isGrid, setIsGrid] = useState(true);
   const [isSettings, setIsSettings] = useState(false);
-  const [isNoteCard,setIsNoteCard] =  useState(false);
+
   const [chosenFilter, setChosenFilter] = useState<NotesFilter>("all");
   const [activeTag, setActiveTag] = useState<TagFilter>(null);
+
+  const [activeModal, setActiveModal] = useState<ActiveModal>(null);
+
+  const openModal = (m: Exclude<ActiveModal, null>) => setActiveModal(m);
+  const closeModal = () => setActiveModal(null);
 
   return (
     <NotesUIContext.Provider
@@ -52,14 +59,17 @@ export const NotesUIProvider = ({ children }: ProviderProps) => {
         sideBarOpen,
         isGrid,
         isSettings,
-        isNoteCard,
+
         chosenFilter,
+        setChosenFilter,
+
         activeTag,
-        setActiveTag: (tag: TagFilter) => setActiveTag(tag),
-        openNoteCard: () => setIsNoteCard(true),
-        closeNoteCard: () => setIsNoteCard(false),
-        setChosenFilter: (f) => setChosenFilter(f),
-        toggleNoteCard:()=>setIsNoteCard((p)=>!p),
+        setActiveTag,
+
+        activeModal,
+        openModal,
+        closeModal,
+
         toggleSideBar: () => setSideBarOpen((p) => !p),
         toggleGrid: () => setIsGrid((p) => !p),
         toggleSettings: () => setIsSettings((p) => !p),
