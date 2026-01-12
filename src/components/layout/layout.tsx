@@ -1,5 +1,6 @@
 import Header from "./header";
 import SideBar from "./sidebar";
+import NotesMain from "../NotesMain";
 import NoteMaker from "../modals/NoteMaker";
 import { useNotesUI } from "../../context/UIcontext";
 
@@ -26,8 +27,7 @@ const NotesLayout = () => {
         <SideBar />
 
         <Main>
-          <h2>MAIN</h2>
-          <p>Ovde prikazuješ note.</p>
+          <NotesMain/>
         </Main>
       </Content>
 
